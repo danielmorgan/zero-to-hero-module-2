@@ -4,11 +4,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 export default function Layout() {
   return (
     <GestureHandlerRootView>
-      <Drawer
-        screenOptions={{
-          drawerActiveTintColor: "#f2a310",
-        }}
-      >
+      <Drawer>
         <Drawer.Screen
           name="index"
           options={{
