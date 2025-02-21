@@ -14,12 +14,10 @@ const Page = () => {
   }, []);
 
   const loadLocations = async () => {
-    console.log("loadLocations()");
     try {
       const locations = await db.getAllAsync<Location>(
         `SELECT * FROM locations`
       );
-      console.log("loaded", { locations });
       setLocations(locations);
     } catch (error) {
       console.error(error);
@@ -27,7 +25,6 @@ const Page = () => {
   };
 
   const addLocation = async (name: string) => {
-    console.log("addLocation()", { name });
     await db.runAsync(`INSERT INTO locations (name) VALUES (?)`, name);
     loadLocations();
   };
