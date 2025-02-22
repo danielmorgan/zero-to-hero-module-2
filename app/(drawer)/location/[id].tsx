@@ -38,7 +38,6 @@ const LocationPage = () => {
       `SELECT * FROM tasks WHERE locationId = ?`,
       [Number(id)]
     );
-    console.log("tasks", tasks);
     setTasks(tasks);
   }, [id, db]);
 

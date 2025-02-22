@@ -15,6 +15,13 @@ const Layout = () => {
           ),
         }}
       />
+      <Stack.Screen
+        name="[id]/new-task"
+        options={{
+          title: "New Task",
+          headerBackTitle: "Discard",
+        }}
+      />
     </Stack>
   );
 };
