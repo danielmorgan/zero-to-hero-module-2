@@ -1,3 +1,4 @@
+import colors from "@/constants/colors";
 import { useState } from "react";
 import {
   View,
@@ -42,15 +43,16 @@ const styles = StyleSheet.create({
   input: {
     flex: 1,
     borderWidth: 1,
-    borderColor: "#ccc",
+    borderColor: colors.lightgray,
     backgroundColor: "#fff",
     padding: 8,
     borderRadius: 8,
   },
   button: {
-    backgroundColor: "#007BFF",
-    color: "#fff",
-    padding: 10,
+    backgroundColor: colors.primary,
+    color: colors.primaryText,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
     textAlign: "center",
     borderRadius: 8,
   },

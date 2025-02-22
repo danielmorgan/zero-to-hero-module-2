@@ -1,3 +1,4 @@
+import colors from "@/constants/colors";
 import { Location } from "@/types/interfaces";
 import { Ionicons } from "@expo/vector-icons";
 import { useSQLiteContext } from "expo-sqlite";
@@ -24,7 +25,7 @@ const LocationListItem = ({ location, onDelete }: Props) => {
     <View style={styles.container}>
       <Text style={styles.name}>{location.name}</Text>
       <TouchableOpacity style={styles.deleteButton} onPress={handleDelete}>
-        <Ionicons name="trash-outline" size={24} color="#E15353" />
+        <Ionicons name="trash-outline" size={24} color={colors.danger} />
       </TouchableOpacity>
     </View>
   );

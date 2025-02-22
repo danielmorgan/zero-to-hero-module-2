@@ -1,11 +1,15 @@
+import { useLocalSearchParams } from "expo-router";
 import { StyleSheet, Text, View } from "react-native";
-type Props = {};
-const Location = (props: Props) => {
+
+const Location = () => {
+  const { id } = useLocalSearchParams();
   return (
     <View>
-      <Text>Location</Text>
+      <Text>Location: {id}</Text>
     </View>
   );
 };
+
 export default Location;
+
 const styles = StyleSheet.create({});

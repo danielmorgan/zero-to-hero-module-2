@@ -1,5 +1,6 @@
 import LocationForm from "@/components/LocationForm";
 import LocationListItem from "@/components/LocationListItem";
+import colors from "@/constants/colors";
 import { Location } from "@/types/interfaces";
 import { useSQLiteContext } from "expo-sqlite";
 import { useEffect, useState } from "react";
@@ -56,6 +57,6 @@ const styles = StyleSheet.create({
   },
   emptyText: {
     textAlign: "center",
-    color: "#666",
+    color: colors.muted,
   },
 });
