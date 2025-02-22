@@ -1,6 +1,7 @@
 import colors from "@/constants/colors";
 import { Location } from "@/types/interfaces";
 import { Ionicons } from "@expo/vector-icons";
+import { Link } from "expo-router";
 import { useSQLiteContext } from "expo-sqlite";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
@@ -22,12 +23,16 @@ const LocationListItem = ({ location, onDelete }: Props) => {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.name}>{location.name}</Text>
-      <TouchableOpacity style={styles.deleteButton} onPress={handleDelete}>
-        <Ionicons name="trash-outline" size={24} color={colors.danger} />
+    <Link href={`/location/${location.id}`} asChild>
+      <TouchableOpacity>
+        <View style={styles.container}>
+          <Text style={styles.name}>{location.name}</Text>
+          <TouchableOpacity style={styles.deleteButton} onPress={handleDelete}>
+            <Ionicons name="trash-outline" size={24} color={colors.danger} />
+          </TouchableOpacity>
+        </View>
       </TouchableOpacity>
-    </View>
+    </Link>
   );
 };
 

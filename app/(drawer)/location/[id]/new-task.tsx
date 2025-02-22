@@ -5,13 +5,14 @@ import { useSQLiteContext } from "expo-sqlite";
 import { useEffect, useState } from "react";
 import {
   Alert,
-  Button,
+  Image,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from "react-native";
 import { Switch, TextInput } from "react-native-gesture-handler";
+import * as ImagePicker from "expo-image-picker";
 
 const NewTask = () => {
   const { id: locationId, taskId } = useLocalSearchParams<{
@@ -88,6 +89,18 @@ const NewTask = () => {
     ]);
   };
 
+  const pickImage = async () => {
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ["images"],
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+    if (!result.canceled) {
+      setImageUri(result.assets[0].uri);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <TextInput
@@ -112,18 +125,34 @@ const NewTask = () => {
         />
       </View>
 
-      <TouchableOpacity style={styles.button} onPress={handleSaveTask}>
-        <Text style={styles.buttonText}>
+      <TouchableOpacity
+        style={[styles.button, styles.secondary]}
+        onPress={pickImage}
+      >
+        <Text style={[styles.buttonText, styles.secondary]}>
+          {imageUri ? "Change Image" : "Add Image"}
+        </Text>
+      </TouchableOpacity>
+
+      {imageUri && (
+        <Image source={{ uri: imageUri }} style={styles.imagePreview} />
+      )}
+
+      <TouchableOpacity
+        style={[styles.button, styles.primary]}
+        onPress={handleSaveTask}
+      >
+        <Text style={[styles.buttonText, styles.primary]}>
           {taskId ? "Update Task" : "Add Task"}
         </Text>
       </TouchableOpacity>
 
       {taskId && (
         <TouchableOpacity
-          style={styles.successButton}
+          style={[styles.button, styles.success]}
           onPress={handleFinishTask}
         >
-          <Text style={styles.successButtonText}>Finish Task</Text>
+          <Text style={[styles.buttonText, styles.success]}>Finish Task</Text>
         </TouchableOpacity>
       )}
     </View>
@@ -155,24 +184,37 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     gap: 8,
   },
+
+  imagePreview: {
+    width: "100%",
+    height: 200,
+    marginBottom: 12,
+    resizeMode: "contain",
+  },
+
   button: {
-    backgroundColor: colors.primary,
     padding: 12,
     borderRadius: 8,
     alignItems: "center",
   },
   buttonText: {
+    fontWeight: "bold",
+  },
+
+  primary: {
+    backgroundColor: colors.primary,
     color: colors.primaryText,
-    fontWeight: "bold",
   },
-  successButton: {
+  secondary: {
+    backgroundColor: colors.muted,
+    color: colors.white,
+  },
+  success: {
     backgroundColor: colors.success,
-    padding: 12,
-    borderRadius: 8,
-    alignItems: "center",
-  },
-  successButtonText: {
     color: colors.successText,
-    fontWeight: "bold",
+  },
+  danger: {
+    backgroundColor: colors.danger,
+    color: colors.dangerText,
   },
 });
