@@ -13,6 +13,15 @@ import {
 } from "react-native";
 import { Switch, TextInput } from "react-native-gesture-handler";
 import * as ImagePicker from "expo-image-picker";
+import * as Notifications from "expo-notifications";
+
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: true,
+    shouldSetBadge: false,
+  }),
+});
 
 const NewTask = () => {
   const { id: locationId, taskId } = useLocalSearchParams<{
@@ -31,6 +40,7 @@ const NewTask = () => {
     if (taskId) {
       loadTaskData();
     }
+    Notifications.requestPermissionsAsync();
   }, [taskId]);
 
   const loadTaskData = async () => {
@@ -70,7 +80,7 @@ const NewTask = () => {
     }
 
     if (isUrgent) {
-      // Notifications
+      scheduleNotification(newTaskId, title);
     }
 
     router.back();
@@ -99,6 +109,20 @@ const NewTask = () => {
     if (!result.canceled) {
       setImageUri(result.assets[0].uri);
     }
+  };
+
+  const scheduleNotification = async (taskId: number, title: string) => {
+    Notifications.scheduleNotificationAsync({
+      content: {
+        title: "Urgent Task Reminder",
+        body: `Don't forget about your urgent task: ${title}`,
+        data: { locationId, taskId },
+      },
+      trigger: {
+        type: Notifications.SchedulableTriggerInputTypes.DATE,
+        date: new Date().getTime() + 1000 * 60,
+      },
+    });
   };
 
   return (
