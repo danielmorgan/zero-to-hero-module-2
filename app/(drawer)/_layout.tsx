@@ -16,7 +16,7 @@ import { Location } from "@/types/interfaces";
 import Logo from "@/assets/images/logo.png";
 import colors from "@/constants/colors";
 
-// const db = SQLite.openDatabaseSync("reports.db");
+const db = SQLite.openDatabaseSync("reports.db");
 
 const LOGO_URI = Image.resolveAssetSource(Logo).uri;
 
@@ -59,7 +59,7 @@ const CustomDrawerContent = (props: any) => {
               <DrawerItem
                 key={location.id}
                 label={location.name}
-                onPress={() => router.push(`/location/${location.id}`)}
+                onPress={() => router.navigate(`/location/${location.id}`)}
                 focused={isActive}
                 activeTintColor={colors.primary}
               />
@@ -75,7 +75,7 @@ const CustomDrawerContent = (props: any) => {
 };
 
 export default function Layout() {
-  // useDrizzleStudio(db);
+  useDrizzleStudio(db);
 
   return (
     <GestureHandlerRootView>
@@ -88,13 +88,14 @@ export default function Layout() {
         <Drawer.Screen
           name="index"
           options={{
-            title: "Manage locations",
+            title: "Manage Locations",
           }}
         />
         <Drawer.Screen
           name="location"
           options={{
             drawerItemStyle: { display: "none" },
+            headerShown: false,
           }}
         />
       </Drawer>
